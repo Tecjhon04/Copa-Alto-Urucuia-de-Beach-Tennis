@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copa Alto Urucuia de Beach Tennis</title>
+    <!-- Inclui o Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Cor de fundo suave, mantém */
+            color: #333; /* Cor de texto principal, mantém */
+        }
+        /* Estilos para o cabeçalho principal - baseado na cor de fundo da logo */
+        .header-bg-darkblue {
+            background-color: #1A2F4B; /* Azul escuro principal da logo */
+            color: #ffffff; /* Texto branco */
+        }
+        /* Estilos para os cards de pontos do sistema de ranking - ajuste de cor */
+        .point-card {
+            background-color: #E3F2FD; /* Azul claro para os cards de pontos (similar ao azul claro da logo) */
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Estilos para gradientes de texto nos títulos de seção (baseado na linha clara da logo) */
+        .gradient-text-logo-blue {
+            background: linear-gradient(90deg, #2196F3, #4FC3F7); /* Gradiente de azul vibrante */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Estilos específicos para o Ranking Masculino - adaptado à paleta da logo */
+        .male-ranking-header-bg {
+            background-color: #2196F3; /* Azul mais próximo da logo */
+            color: white;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        /* Card base para o ranking masculino */
+        .male-ranking-card-base {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .male-ranking-card-base:last-child {
+            margin-bottom: 0;
+        }
+        /* Estilos individuais dos cards do ranking masculino - mantendo distinção mas na nova paleta */
+        .male-ranking-card-1 { background-color: #E0F7FA; } /* Azul claro pastel */
+        .male-ranking-card-2 { background-color: #E1F5FE; } /* Azul muito claro */
+        .male-ranking-card-3 { background-color: #BBDEFB; } /* Azul claro */
+        .male-ranking-card-4 { background-color: #90CAF9; } /* Azul médio-claro */
+        .male-ranking-card-5 { background-color: #64B5F6; } /* Azul médio */
+
+        /* Balão de pontos masculino - ajustado */
+        .male-ranking-points {
+            background-color: #BBDEFB; /* Azul claro para o balão de pontos */
+            color: #1A2F4B; /* Azul escuro para o texto dos pontos */
+            padding: 0.4rem 0.8rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Estilos específicos para o Ranking Feminino - agora com tons de rosa/roxo */
+        .female-ranking-header-bg {
+            background: linear-gradient(90deg, #FF69B4, #EE82EE); /* Degradê rosa/roxo vibrante */
+            color: white;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        /* Card base para o ranking feminino - tons de rosa/roxo */
+        .female-ranking-card-base {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .female-ranking-card-base:last-child {
+            margin-bottom: 0;
+        }
+        /* Estilos individuais dos cards do ranking feminino - tons de rosa/roxo */
+        .female-ranking-card-1 { background-color: #FFF0F5; } /* Lavender Blush - rosa muito claro */
+        .female-ranking-card-2 { background-color: #FCE4EC; } /* Rosa claro */
+        .female-ranking-card-3 { background-color: #F8BBD0; } /* Rosa médio */
+        .female-ranking-card-4 { background-color: #F48FB1; } /* Rosa mais escuro */
+        .female-ranking-card-5 { background-color: #E91E63; } /* Rosa ainda mais escuro/avermelhado */
+
+
+        /* Balão de pontos feminino - ajustado para rosa */
+        .female-ranking-points {
+            background-color: #F8BBD0; /* Rosa claro para o balão de pontos */
+            color: #8B008B; /* Magenta escuro para o texto dos pontos */
+            padding: 0.4rem 0.8rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Estilo para o botão de toggle do calendário - Removido do HTML, mantendo styles para referência */
+        .toggle-button {
+            background-color: #4FC3F7; /* Azul vibrante da logo */
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out;
+        }
+        .toggle-button:hover {
+            background-color: #00BCD4; /* Tom mais escuro do azul vibrante ao hover */
+        }
+
+        /* Estilo para os itens do calendário - ajuste de cor */
+        .calendar-item {
+            background-color: #E3F2FD; /* Azul claro (similar ao point-card) */
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .calendar-item:last-child {
+            margin-bottom: 0;
+        }
+        /* Estilo para as fotos dos atletas (circulares) */
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid;
+        }
+        /* Cores da borda para as fotos de cada posição no ranking masculino - adaptado à nova paleta */
+        .male-ranking-card-1 .player-avatar { border-color: #4FC3F7; } /* Azul claro vibrante */
+        .male-ranking-card-2 .player-color { border-color: #81D4FA; } /* Azul mais claro */
+        .male-ranking-card-3 .player-avatar { border-color: #BBDEFB; } /* Azul médio */
+        .male-ranking-card-4 .player-avatar { border-color: #90CAF9; } /* Azul médio-claro */
+        .male-ranking-card-5 .player-avatar { border-color: #64B5F6; } /* Azul mais forte */
+
+        /* Cores da borda para as fotos de cada posição no ranking feminino - adaptado à nova paleta rosa */
+        .female-ranking-card-1 .player-avatar { border-color: #FF69B4; } /* Rosa forte */
+        .female-ranking-card-2 .player-avatar { border-color: #E91E63; } /* Rosa profundo */
+        .female-ranking-card-3 .player-avatar { border-color: #D81B60; } /* Rosa mais forte */
+        .female-ranking-card-4 .player-avatar { border-color: #C2185B; } /* Rosa escuro */
+        .female-ranking-card-5 .player-avatar { border-color: #880E4F; } /* Rosa mais escuro */
+
+        /* Estilos para os cards de torneio */
+        .tournament-card {
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .tournament-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .tournament-card-icon {
+            color: #2196F3; /* Azul para o ícone de calendário */
+            font-size: 1.5rem;
+        }
+
+        .tournament-status-open {
+            background-color: #D4EDDA; /* Verde claro para "Inscrições Abertas" */
+            color: #155724; /* Verde escuro */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .tournament-status-soon {
+            background-color: #FFF3CD; /* Amarelo claro para "Em Breve" */
+            color: #856404; /* Amarelo escuro */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .tournament-button {
+            background-color: #007BFF; /* Azul para o botão "Inscrever-se" */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .tournament-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para a seção da Galeria de Fotos */
+        .gallery-section-bg {
+            background: linear-gradient(to right, #BBDEFB, #FFCDD2); /* Gradiente azul claro para rosa claro */
+            padding: 2.5rem 1.5rem; /* Ajusta o padding conforme a imagem */
+            border-radius: 1rem; /* Adiciona bordas arredondadas */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-title {
+            color: #333; /* Cor do texto para o título da galeria */
+            font-size: 2.5rem; /* Tamanho da fonte para o título */
+            font-weight: 700; /* Negrito */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .gallery-subtitle {
+            color: #555; /* Cor do texto para o subtítulo */
+            font-size: 1.125rem;
+            text-align: center;
+            margin-bottom: 2rem; /* Espaçamento abaixo do subtítulo */
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Colunas flexíveis */
+            gap: 1rem; /* Espaçamento entre os cards */
+        }
+
+        .gallery-card-item {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1 / 1; /* Mantém a proporção 1:1 */
+            position: relative;
+            overflow: hidden; /* Garante que a imagem preencha sem transbordar */
+        }
+
+        .gallery-card-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.75rem;
+        }
+
+        .gallery-card-item i {
+            color: #CCCCCC; /* Cor do ícone da câmera dentro do card */
+            font-size: 2.5rem; /* Tamanho do ícone da câmera */
+            position: absolute; /* Para centralizar sobre a imagem */
+            z-index: 1; /* Garante que o ícone esteja acima da imagem de fundo */
+        }
+
+        .gallery-view-more-button {
+            background-color: #2196F3; /* Azul primário */
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: background-color 0.3s ease;
+            display: none; /* Escondido por padrão, JavaScript o mostrará se necessário */
+        }
+        .gallery-view-more-button:hover {
+            background-color: #1976D2; /* Azul mais escuro ao hover */
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="min-h-screen flex flex-col items-center">
+        <!-- Cabeçalho Principal -->
+        <header class="w-full text-center py-10 px-4 sm:px-6 lg:px-8 header-bg-darkblue rounded-b-3xl shadow-xl mb-6">
+            <!-- A logo foi removida daqui -->
+            <h1 class="text-5xl sm:text-6xl font-extrabold mb-4 text-white">
+                Copa Alto Urucuia de Beach Tennis
+            </h1>
+            <p class="text-xl sm:text-2xl text-white leading-relaxed">
+                Acompanhe o ranking oficial dos atletas participantes.
+            </p>
+            <hr class="border-t-2 border-blue-400 w-24 mx-auto mt-8 rounded-full">
+        </header>
+
+        <!-- Barra de Navegação no Conteúdo -->
+        <nav class="w-full max-w-4xl bg-white shadow-md rounded-xl p-4 mb-8 flex flex-wrap justify-center sm:justify-around items-center text-sm sm:text-base">
+            <a href="#sistema-de-ranking" class="py-2 px-3 sm:px-4 text-blue-700 hover:bg-blue-100 rounded-lg transition-colors duration-200">Sistema de Pontos</a>
+            <a href="#ranking-masculino" class="py-2 px-3 sm:px-4 text-blue-700 hover:bg-blue-100 rounded-lg transition-colors duration-200">Ranking Masculino</a>
+            <a href="#ranking-feminino" class="py-2 px-3 sm:px-4 text-blue-700 hover:bg-blue-100 rounded-lg transition-colors duration-200">Ranking Feminino</a>
+            <a href="#proximos-torneios" class="py-2 px-3 sm:px-4 text-blue-700 hover:bg-blue-100 rounded-lg transition-colors duration-200">Próximos Torneios</a>
+            <a href="#contato" class="py-2 px-3 sm:px-4 text-blue-700 hover:bg-blue-100 rounded-lg transition-colors duration-200">Contato</a>
+        </nav>
+
+        <main class="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <!-- Seção do Sistema de Ranking -->
+            <section id="sistema-de-ranking" class="lg:col-span-2 bg-white shadow-xl rounded-2xl p-6 sm:p-10 mb-10">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center gradient-text-logo-blue flex items-center justify-center space-x-3">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Sistema de Ranking</span>
+                </h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-8 text-center">
+                    O sistema de ranking é baseado no desempenho dos atletas ao longo dos torneios. Os pontos são atribuídos conforme as fases alcançadas e a participação em cada etapa oficial da Copa Alto Urucuia.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="point-card">
+                        <span class="text-3xl font-bold text-blue-700">+100</span>
+                        <span class="text-lg text-blue-800 mt-2">Vitória</span>
+                    </div>
+                    <div class="point-card">
+                        <span class="text-3xl font-bold text-blue-700">+80</span>
+                        <span class="text-lg text-blue-800 mt-2">Vice-campeonato</span>
+                    </div>
+                    <div class="point-card">
+                        <span class="text-3xl font-bold text-blue-700">+60</span>
+                        <span class="text-lg text-blue-800 mt-2">Semifinal</span>
+                    </div>
+                    <div class="point-card">
+                        <span class="text-3xl font-bold text-blue-700">+20</span>
+                        <span class="text-lg text-blue-800 mt-2">Participação</span>
+                    </div>
+                </div>
+                <hr class="border-t-2 border-blue-200 w-16 mx-auto mt-10 rounded-full">
+            </section>
+
+            <!-- Seção de Ranking Masculino -->
+            <section id="ranking-masculino" class="w-full rounded-xl shadow-xl overflow-hidden">
+                <div class="male-ranking-header-bg">
+                    <i class="fas fa-user text-white"></i>
+                    <span>Ranking Masculino</span>
+                    <i class="fas fa-trophy text-yellow-300"></i>
+                </div>
+                <div class="bg-white p-4"> <!-- Este div conterá a lista de jogadores e a data -->
+                    <div class="space-y-4">
+                        <!-- Jogador 1: Placeholder -->
+                        <div class="male-ranking-card-base male-ranking-card-1">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto do jogador" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">1. [Nome do Jogador]</span>
+                            </div>
+                            <span class="male-ranking-points">0 pts</span>
+                        </div>
+                        <!-- Jogador 2: Placeholder -->
+                        <div class="male-ranking-card-base male-ranking-card-2">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto do jogador" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">2. [Nome do Jogador]</span>
+                            </div>
+                            <span class="male-ranking-points">0 pts</span>
+                        </div>
+                        <!-- Jogador 3: Placeholder -->
+                        <div class="male-ranking-card-base male-ranking-card-3">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto do jogador" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">3. [Nome do Jogador]</span>
+                            </div>
+                            <span class="male-ranking-points">0 pts</span>
+                        </div>
+                        <!-- Jogador 4: Placeholder -->
+                        <div class="male-ranking-card-base male-ranking-card-4">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto do jogador" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">4. [Nome do Jogador]</span>
+                            </div>
+                            <span class="male-ranking-points">0 pts</span>
+                        </div>
+                        <!-- Jogador 5: Placeholder -->
+                        <div class="male-ranking-card-base male-ranking-card-5">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto do jogador" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">5. [Nome do Jogador]</span>
+                            </div>
+                            <span class="male-ranking-points">0 pts</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 text-right">
+                        *Ranking atualizado em: DD/MM/AAAA*
+                    </p>
+                </div>
+            </section>
+
+            <!-- Seção de Ranking Feminino -->
+            <section id="ranking-feminino" class="w-full rounded-xl shadow-xl overflow-hidden">
+                <div class="female-ranking-header-bg">
+                    <i class="fas fa-user text-white"></i>
+                    <span>Ranking Feminino</span>
+                    <i class="fas fa-trophy text-yellow-300"></i>
+                </div>
+                <div class="bg-white p-4"> <!-- Este div conterá a lista de jogadores e a data -->
+                    <div class="space-y-4">
+                        <!-- Jogadora 1: Placeholder -->
+                        <div class="female-ranking-card-base female-ranking-card-1">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto da jogadora" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">1. [Nome da Jogadora]</span>
+                            </div>
+                            <span class="female-ranking-points">0 pts</span>
+                        </div>
+                        <!-- Jogadora 2: Placeholder -->
+                        <div class="female-ranking-card-base female-ranking-card-2">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto da jogadora" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">2. [Nome da Jogadora]</span>
+                            </div>
+                            <span class="female-ranking-points">0 pts</span>
+                        </div>
+                        <!-- Jogadora 3: Placeholder -->
+                        <div class="female-ranking-card-base female-ranking-card-3">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto da jogadora" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">3. [Nome da Jogadora]</span>
+                            </div>
+                            <span class="female-ranking-points">0 pts</span>
+                        </div>
+                        <!-- Jogadora 4: Placeholder -->
+                        <div class="female-ranking-card-base female-ranking-card-4">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto da jogadora" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">4. [Nome da Jogadora]</span>
+                            </div>
+                            <span class="female-ranking-points">0 pts</span>
+                        </div>
+                        <!-- Jogadora 5: Placeholder -->
+                        <div class="female-ranking-card-base female-ranking-card-5">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/40x40/DDDDDD/666666?text=?" alt="Foto da jogadora" class="player-avatar" onerror="this.onerror=null;this.src='https://placehold.co/40x40/DDDDDD/666666?text=?';">
+                                <span class="text-xl text-gray-800 font-semibold">5. [Nome da Jogadora]</span>
+                            </div>
+                            <span class="female-ranking-points">0 pts</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 text-right">
+                        *Ranking atualizado em: DD/MM/AAAA*
+                    </p>
+                </div>
+            </section>
+
+            <!-- Seção de Próximos Torneios -->
+            <section id="proximos-torneios" class="lg:col-span-2 bg-white shadow-xl rounded-2xl p-6 sm:p-10 mb-10">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center gradient-text-logo-blue flex items-center justify-center space-x-3">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Próximos Torneios</span>
+                </h2>
+                <p class="text-lg text-gray-700 leading-relaxed text-center mb-6">
+                    Fique de olho nas próximas etapas da Copa Alto Urucuia de Beach Tennis! Participe, pontue e suba no ranking.
+                </p>
+                <!-- Layout da imagem, removendo o botão de toggle e o div calendarContent -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card para Etapa Verão 2024 -->
+                    <div class="tournament-card">
+                        <div class="tournament-card-header">
+                            <i class="fas fa-calendar-alt tournament-card-icon"></i>
+                            <h3 class="text-xl font-semibold text-gray-800">Etapa Verão 2024</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2"><i class="fas fa-calendar-days mr-2"></i> 20 e 21 de Junho de 2025</p>
+                        <p class="text-sm text-gray-600 mb-2"><i class="fas fa-clock mr-2"></i> 17:00</p>
+                        <p class="text-sm text-gray-600 mb-4"><i class="fas fa-map-marker-alt mr-2"></i> Arena Beach - Buritis-MG</p>
+                        <p class="text-sm text-gray-600 mb-4"><i class="fas fa-users mr-2"></i> 64 vagas</p>
+                        <span class="tournament-status-open mb-4">Inscrições Abertas</span>
+                        <a href="#" class="tournament-button">Inscrever-se</a>
+                    </div>
+                </div>
+                <hr class="border-t-2 border-blue-200 w-16 mx-auto mt-10 rounded-full">
+            </section>
+
+            <!-- Seção da Galeria de Fotos (nova posição e estilo) -->
+            <section id="galeria-de-fotos" class="lg:col-span-2 w-full max-w-4xl p-0 mb-12">
+                <div class="gallery-section-bg rounded-2xl shadow-xl">
+                    <h2 class="gallery-title">
+                        <i class="fas fa-camera-retro"></i>
+                        <span>Galeria de Fotos</span>
+                    </h2>
+                    <p class="gallery-subtitle">
+                        Confira os melhores momentos das partidas, bastidores e celebrações dos atletas.
+                    </p>
+
+                    <div class="gallery-grid" id="galleryGrid">
+                        <!-- Galeria de Fotos: Card 1 -->
+                        <div class="gallery-card-item">
+                            <img src="https://i.postimg.cc/JzdznwZv/Imagem-do-Whats-App-de-2025-06-01-s-11-30-23-f74c05f2.jpg" alt="Foto da Galeria 1" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 2 -->
+                        <div class="gallery-card-item">
+                            <img src="https://i.postimg.cc/DZtLjYzS/Imagem-do-Whats-App-de-2025-06-01-s-11-30-18-50a37fd9.jpg" alt="Foto da Galeria 2" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 3 -->
+                        <div class="gallery-card-item">
+                            <img src="https://i.postimg.cc/0jDmLd6c/Imagem-do-Whats-App-de-2025-06-01-s-11-30-18-692562cb.jpg" alt="Foto da Galeria 3" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 4 -->
+                        <div class="gallery-card-item">
+                            <img src="https://i.postimg.cc/mrpQMrfN/Imagem-do-Whats-App-de-2025-06-01-s-11-30-18-8ef76cfc.jpg" alt="Foto da Galeria 4" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 5 -->
+                        <div class="gallery-card-item">
+                            <img src="https://i.postimg.cc/qMH22YYY/Imagem-do-Whats-App-de-2025-06-01-s-11-30-18-91223996.jpg" alt="Foto da Galeria 5" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 6 -->
+                        <div class="gallery-card-item">
+                            <img src="https://i.postimg.cc/NGH19YNm/Imagem-do-Whats-App-de-2025-06-01-s-11-30-18-a207f68a.jpg" alt="Foto da Galeria 6" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 7 -->
+                        <div class="gallery-card-item hidden">
+                            <img src="https://i.postimg.cc/Hkp5hMT9/Imagem-do-Whats-App-de-2025-06-01-s-11-30-19-65312c38.jpg" alt="Foto da Galeria 7" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 8 -->
+                        <div class="gallery-card-item hidden">
+                            <img src="https://i.postimg.cc/xTGM55Vd/Imagem-do-Whats-App-de-2025-06-01-s-11-30-19-8857da2a.jpg" alt="Foto da Galeria 8" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 9 -->
+                        <div class="gallery-card-item hidden">
+                            <img src="https://i.postimg.cc/wj0J8Bv8/Imagem-do-Whats-App-de-2025-06-01-s-11-30-19-c796febd.jpg" alt="Foto da Galeria 9" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 10 -->
+                        <div class="gallery-card-item hidden">
+                            <img src="https://i.postimg.cc/8zRv3zvD/Imagem-do-Whats-App-de-2025-06-01-s-11-30-29-e45c0695.jpg" alt="Foto da Galeria 10" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 11 -->
+                        <div class="gallery-card-item hidden">
+                            <img src="https://i.postimg.cc/SRz0Q5LL/Imagem-do-Whats-App-de-2025-06-01-s-11-30-24-2ab009d2.jpg" alt="Foto da Galeria 11" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 12 -->
+                        <div class="gallery-card-item hidden">
+                            <img src="https://i.postimg.cc/jjHbnVYc/Imagem-do-Whats-App-de-2025-06-01-s-11-30-24-b39bef3a.jpg" alt="Foto da Galeria 12" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 13 -->
+                        <div class="gallery-card-item hidden">
+                            <img src="https://i.postimg.cc/1tyZpW9Q/Imagem-do-Whats-App-de-2025-06-01-s-11-30-25-0534b923.jpg" alt="Foto da Galeria 13" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                        <!-- Galeria de Fotos: Card 14 -->
+                        <div class="gallery-card-item hidden">
+                            <img src="https://i.postimg.cc/nrzbWCjS/Imagem-do-Whats-App-de-2025-06-01-s-11-30-25-13614606.jpg" alt="Foto da Galeria 14" onerror="this.onerror=null;this.src='https://placehold.co/300x300/E0E0E0/BBDEFB?text=Foto';">
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-8">
+                        <button id="viewMoreGalleryBtn" class="gallery-view-more-button">Ver Mais Fotos</button>
+                    </div>
+                </div>
+                <hr class="border-t-2 border-blue-200 w-16 mx-auto mt-10 rounded-full">
+            </section>
+
+
+            <!-- Seção de Contato e Inscrição -->
+            <section id="contato" class="lg:col-span-2 bg-white shadow-xl rounded-2xl p-6 sm:p-10 mb-8">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center gradient-text-logo-blue flex items-center justify-center space-x-3">
+                    📞 Contato e Inscrição
+                </h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4 text-center">
+                    Entre em contato para mais informações ou inscreva-se na próxima etapa:
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
+                    <a href="https://wa.me/5538998812179" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2">
+                                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.04 2C7.34 2 3.42 5.92 3.42 10.62c0 1.54.43 3.03 1.25 4.36L2 22l7.15-1.89c1.24.69 2.65 1.08 4.09 1.08 4.71 0 8.63-3.92 8.63-8.63C20.67 5.92 16.75 2 12.04 2zM17.27 15.54c-.29.21-.69.3-.99.3-.24 0-.45-.09-.66-.18-.54-.23-1.29-.68-2.17-1.56-.88-.88-1.6-2-1.85-2.5-.25-.5-.03-.78.18-.99s.5-.54.69-.78c.19-.24.29-.45.4-.69.09-.24.04-.45-.09-.69-.14-.29-.6-.78-1.24-1.29-.64-.52-1.29-1.02-1.83-1.02-.54 0-1.02.18-1.4.56-.38.38-.85.9-1.24 1.4-.38.49-.69 1.09-.69 1.77 0 .69.24 1.39.69 1.99s1.09 1.02 1.77 1.41c.69.38 1.39.69 2.08.69.7 0 1.39-.18 1.99-.48s1.09-.78 1.56-1.29c.49-.52.78-1.02.99-1.4.21-.38.3-.78.21-1.16-.09-.38-.29-.6-.48-.78z"/>
+                        </svg>
+                        <span>WhatsApp: (38) 99881-2179</span>
+                    </a>
+                    <a href="https://instagram.com/copa.altourucuia.bt" target="_blank" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2">
+                                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.8 2c-2.4 0-4.4 2-4.4 4.4v11.2c0 2.4 2 4.4 4.4 4.4h8.4c2.4 0 4.4-2 4.4-4.4V6.4c0-2.4-2-4.4-4.4-4.4H7.8zm9 2c1.2 0 2.2 1 2.2 2.2v8.4c0 1.2-1 2.2-2.2 2.2H7.8c-1.2 0-2.2-1-2.2-2.2V6.2c0-1.2 1-2.2 2.2-2.2h8.4zm-4.2 3.6a4.2 4.2 0 1 0 0 8.4 4.2 4.2 0 0 0 0-8.4zm0 1.8a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8zM17.4 5.8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/>
+                        </svg>
+                        <span>Instagram: @copa.altourucuia.bt</span>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Container para as logos dos Parceiros Oficiais -->
+        <div class="w-full max-w-4xl text-center py-6 px-4 sm:px-6 lg:px-8">
+            <h3 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-4">Parceiros Oficiais</h3>
+            <div class="flex flex-col lg:flex-row justify-center items-center"> <!-- Removido o gap para deixar o mais próximo possível -->
+                <img src="https://i.postimg.cc/vTPXNRP7/Imagem-do-Whats-App-de-2025-05-05-s-10-21-09-5b96b9f7-removebg-preview.png" alt="Logo da Arena Parceira" class="mx-auto h-20 w-auto object-contain">
+                <img src="https://i.postimg.cc/2SPwL7bw/454559370-1227854678128799-2404717185737236019-n.jpg" alt="Detalhe do Rodapé" class="mx-auto h-12 w-auto object-contain">
+            </div>
+        </div>
+
+        <!-- Rodapé final de copyright -->
+        <footer class="w-full max_w_4xl text-center text-gray_500 text_sm mt_6 mb_8">
+            <p>&copy; 2025 Copa Alto Urucuia de Beach Tennis. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Script para a galeria de fotos
+            const galleryItems = document.querySelectorAll('#galleryGrid .gallery-card-item');
+            const viewMoreButton = document.getElementById('viewMoreGalleryBtn');
+            const initialVisibleCount = 6; // Número de fotos visíveis inicialmente
+
+            // Oculta todas as fotos além do número inicial
+            galleryItems.forEach((item, index) => {
+                if (index >= initialVisibleCount) {
+                    item.classList.add('hidden'); // Usa a classe 'hidden' do Tailwind
+                }
+            });
+
+            // Mostra o botão "Ver Mais Fotos" apenas se houver mais fotos para exibir
+            if (galleryItems.length > initialVisibleCount) {
+                viewMoreButton.style.display = 'block'; // Garante que o botão seja visível
+            }
+
+            // Adiciona funcionalidade ao botão "Ver Mais Fotos"
+            viewMoreButton.addEventListener('click', () => {
+                galleryItems.forEach(item => {
+                    item.classList.remove('hidden'); // Exibe todas as fotos ocultas
+                });
+                viewMoreButton.style.display = 'none'; // Oculta o botão após todas as fotos serem exibidas
+            });
+        });
+    </script>
+</body>
+</html>
